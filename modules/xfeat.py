@@ -20,7 +20,7 @@ class XFeat(nn.Module):
 		It supports inference for both sparse and semi-dense feature extraction & matching.
 	"""
 
-	def __init__(self, weights = os.path.abspath(os.path.dirname(__file__)) + '/../weights/xfeat.pt', top_k = 4096, detection_threshold=0.05):
+	def __init__(self, weights = os.path.abspath(os.path.dirname(__file__)) + '/../weights/xfeat.pt', init_lighter_glue = False, top_k = 4096, detection_threshold=0.05):
 		super().__init__()
 		self.dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 		self.net = XFeatModel().to(self.dev).eval()
@@ -38,7 +38,13 @@ class XFeat(nn.Module):
 
 		#Try to import LightGlue from Kornia
 		self.kornia_available = False
-		self.lighterglue = None
+		
+		if init_lighter_glue:
+			from modules.lighterglue import LighterGlue
+			self.lighterglue = LighterGlue()
+		else:
+			self.lighterglue = None
+
 		try:
 			import kornia
 			self.kornia_available=True

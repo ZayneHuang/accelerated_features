@@ -12,7 +12,7 @@ import tqdm
 
 from modules.xfeat import XFeat
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '' #Force CPU, comment for GPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '0' #Force CPU, comment for GPU
 
 xfeat = XFeat()
 
